@@ -63,6 +63,12 @@ public class Main {
             sensores[i] = new Sensor(id, numEventos, ns, buzonEntrada);
         }
 
+        Broker broker = new Broker(buzonEntrada, buzonAlertas, 
+                                    buzonClasificacion, totalEventos);
+
+        Administrador admin = new Administrador(buzonAlertas, 
+                                                buzonClasificacion, nc);
+
         Clasificador[] clasificadores = new Clasificador[nc];
         for (int i = 0; i < nc; i++) {
             clasificadores[i] = new Clasificador(
@@ -74,26 +80,18 @@ public class Main {
             servidores[i] = new Servidor(i + 1, buzonesServidor[i]);
         }
 
-        // TODO: cuando esté el Broker y el Administrador, instanciarlos aquí.
-        // Broker broker = new Broker(buzonEntrada, buzonAlertas,
-        //                            buzonClasificacion, totalEventos);
-        // Administrador admin = new Administrador(buzonAlertas,
-        //                                         buzonClasificacion, nc);
-
-
         // === 5. Arrancar ===
         for (Sensor s : sensores)          s.start();
+        broker.start();
+        admin.start();
         for (Clasificador c : clasificadores) c.start();
         for (Servidor sv : servidores)     sv.start();
-        // broker.start();
-        // admin.start();
-
 
         // === 6. Esperar terminación ===
         try {
             for (Sensor s : sensores)             s.join();
-            // broker.join();
-            // admin.join();
+            broker.join();
+            admin.join();
             for (Clasificador c : clasificadores) c.join();
             for (Servidor sv : servidores)        sv.join();
         } catch (InterruptedException e) {

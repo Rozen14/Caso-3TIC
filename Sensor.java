@@ -21,6 +21,7 @@ public class Sensor extends Thread{
                 int tipo = rand.nextInt(ns) + 1;
                 Evento e = new Evento(id, curr, tipo);
                 buzonEntrada.depositar(e);
+                Thread.yield(); // espera semi-activa: cede CPU entre eventos
             }
             System.out.println("Sensor " + id + " termino (" + numEventos + " eventos)");
         } catch (InterruptedException ex) {

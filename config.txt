@@ -1,0 +1,6 @@
+ni=3
+base=2
+nc=2
+ns=3
+tam1=10
+tam2=5
