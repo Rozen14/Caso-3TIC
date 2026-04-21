@@ -1,3 +1,4 @@
+package Caso3;
 import java.util.Random;
 
 public class Servidor extends Thread{

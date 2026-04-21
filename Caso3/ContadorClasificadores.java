@@ -1,3 +1,4 @@
+package Caso3;
 public class ContadorClasificadores {
     private int terminados = 0;
     private final int total;
